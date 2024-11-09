@@ -1,17 +1,14 @@
-// libs/database/database.module.ts
 import { Module } from '@nestjs/common';
-import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
-import { ConfigModule } from '../config/config.module';  // Import ConfigModule
+import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     MongooseModule.forRootAsync({
-      imports: [ConfigModule], // Import ConfigModule to inject ConfigService
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_URI'), // Retrieve MONGO_URI from ConfigService
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get('MONGO_URI'),
       }),
-      inject: [ConfigService], // Inject ConfigService to be used in useFactory
+      inject: [ConfigService],
     }),
   ],
 })
