@@ -3,12 +3,12 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { DatabaseModule } from '@app/common';
 import { UserDocument, UserSchema } from './models/user.model';
-import { UserRepository } from './user.repository';
+import { UsersRepository } from './user.repository';
 @Module({
   imports:[DatabaseModule, DatabaseModule.forFeature([
     { name: UserDocument.name, schema: UserSchema },
   ])],
   controllers: [UsersController],
-  providers: [UsersService,UserRepository]
+  providers: [UsersService,UsersRepository]
 })
 export class UsersModule {}
