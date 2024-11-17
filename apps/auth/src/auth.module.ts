@@ -5,6 +5,8 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import * as Joi from 'joi';
+import { LocalStategy } from './strategies/local.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 @Module({
   imports: [UsersModule,  ConfigModule.forRoot({
     isGlobal: true,
@@ -23,6 +25,6 @@ import * as Joi from 'joi';
   }),
 ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService,LocalStategy,JwtStrategy],
 })
 export class AuthModule {}

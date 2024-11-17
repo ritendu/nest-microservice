@@ -11,6 +11,7 @@ services:
       - '3000:3000'
     volumes:
       - .:/usr/src/app
+
   auth:
     build:
       context: .
@@ -23,6 +24,7 @@ services:
       - '3001:3001'
     volumes:
       - .:/usr/src/app
+
   # payments:
   #   build:
   #     context: .
@@ -33,6 +35,7 @@ services:
   #     - ./apps/payments/.env
   #   volumes:
   #     - .:/usr/src/app
+
   # notifications:
   #   build:
   #     context: .
@@ -43,5 +46,11 @@ services:
   #     - ./apps/notifications/.env
   #   volumes:
   #     - .:/usr/src/app
+
   mongo:
     image: mongo
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
