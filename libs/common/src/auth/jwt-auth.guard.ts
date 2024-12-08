@@ -32,8 +32,6 @@ export class JwtAuthGuard implements CanActivate {
       return false;
     }
 
-    // const roles = this.reflector.get<string[]>('roles', context.getHandler());
-
     return this.authClient
       .send('authenticate', {
         Authentication: jwt,

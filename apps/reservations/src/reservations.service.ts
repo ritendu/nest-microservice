@@ -7,11 +7,11 @@ import { UpdateReservationDto } from './dto/update-reservation.dto';
 export class ReservationsService {
   constructor(private reservationRepository:ReservationsRepository){}
 
-  async create(createReservationDto:CreateReservationDto){
+  async create(createReservationDto:CreateReservationDto,user){
   return this.reservationRepository.create({
     ...createReservationDto,
     timestamp:new Date(),
-    userId:'123'
+    userId:user?._id
   })  
   }
 

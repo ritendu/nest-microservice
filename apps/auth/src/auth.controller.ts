@@ -24,6 +24,6 @@ export class AuthController {
   @MessagePattern('authenticate')
   async authenticate(@Payload() data: any) {
     console.log(data,'data>>>>>>>')
-    return data.user;
+    return data?.user;
   }
 }

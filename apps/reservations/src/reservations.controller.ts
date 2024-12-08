@@ -16,7 +16,7 @@ export class ReservationsController {
     @CurrentUser() user,
   ) {
     console.log(user,"user in reservation controller")
-    return this.reservationsService.create(createReservationDto);
+    return this.reservationsService.create(createReservationDto,user);
   }
 
   @Get()
