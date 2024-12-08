@@ -1,16 +1,21 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ReservationsService } from './reservations.service';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { CreateReservationDto } from './dto/create-reservation.dto';
+import { JwtAuthGuard } from '@app/common';
+import { CurrentUser } from 'apps/auth/src/current-user-decorator';
 
 @Controller('reservations')
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(
     @Body() createReservationDto: CreateReservationDto,
+    @CurrentUser() user,
   ) {
+    console.log(user,"user in reservation controller")
     return this.reservationsService.create(createReservationDto);
   }
 

@@ -10,7 +10,8 @@ import {
   ReservationDocument,
   ReservationSchema,
 } from './models/reservation.schema';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -24,8 +25,22 @@ import { ConfigModule } from '@nestjs/config';
         MONGO_URI: Joi.string().required(),
       }),
     }),
-
+    ClientsModule.registerAsync([
+      {
+        name: 'AUTH',
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get('AUTH_HOST'),
+            port: configService.get('AUTH_PORT'),
+          },
+        }),
+        inject: [ConfigService],
+      },
+    ]),
   ],
+  
+  
   controllers: [ReservationsController],
   providers: [ReservationsService, ReservationsRepository],
 })

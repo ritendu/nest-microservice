@@ -7,8 +7,15 @@ import { JwtModule } from '@nestjs/jwt';
 import * as Joi from 'joi';
 import { LocalStategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { UsersRepository } from './users/user.repository';
+import { DatabaseModule } from '@app/common';
+import { UserDocument, UserSchema } from './users/models/user.model';
 @Module({
-  imports: [UsersModule,  ConfigModule.forRoot({
+  imports: [UsersModule, 
+    DatabaseModule.forFeature([
+      { name: UserDocument.name, schema: UserSchema },
+    ]),
+    ConfigModule.forRoot({
     isGlobal: true,
     validationSchema: Joi.object({
       MONGO_URI: Joi.string().required(),
@@ -25,6 +32,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
   }),
 ],
   controllers: [AuthController],
-  providers: [AuthService,LocalStategy,JwtStrategy],
+  providers: [AuthService,LocalStategy,JwtStrategy,UsersRepository],
 })
 export class AuthModule {}
